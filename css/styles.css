@@ -1557,6 +1557,81 @@ html {
     font-weight: 500;
 }
 
+/* Notifications Button */
+.btn-notifications {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-blanco);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 25px;
+    font-family: var(--font-titulo);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+}
+
+.btn-notifications:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+}
+
+.notification-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: var(--color-blanco);
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-titulo);
+    border: 2px solid var(--color-azul-golfo);
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+    animation: pulse 2s infinite;
+    min-width: 22px;
+}
+
+.notification-badge.hidden {
+    display: none;
+}
+
+.notification-badge.animate {
+    animation: bounce 0.5s ease;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(231, 76, 60, 0.6);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3);
+    }
+}
+
 /* Logout Button */
 .btn-logout {
     background: linear-gradient(135deg, var(--color-turquesa), var(--color-hoja-agua));

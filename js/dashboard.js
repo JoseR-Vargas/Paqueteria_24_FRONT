@@ -34,6 +34,9 @@ class Dashboard {
         this.authService = new AuthService();
         this.contacts = [];
         this.filteredContacts = [];
+        this.lastCheckedContacts = [];
+        this.notificationCheckInterval = null;
+        this.socket = null;
         this.init();
     }
 
@@ -46,9 +49,19 @@ class Dashboard {
         }
 
         this.contacts = await this.loadContacts();
+        this.lastCheckedContacts = [...this.contacts];
         this.filteredContacts = [...this.contacts];
+        
+        // Al cargar inicialmente, marcar todas las consultas existentes como leídas
+        const allIds = new Set(this.contacts.map(c => c._id || c.id));
+        this.saveReadNotificationIds(allIds);
+        
         this.renderContacts();
+        this.updateNotificationBadge();
         this.attachEventListeners();
+        this.connectWebSocket();
+        // Mantener polling como backup por si falla WebSocket
+        // this.startNotificationPolling();
     }
 
     // Cargar contactos desde backend
@@ -67,12 +80,16 @@ class Dashboard {
 
     // Cargar datos desde backend
     async loadFromBackend() {
-        // Usar configuración centralizada
+        // Usar configuración centralizada del archivo config.js
         const backendUrl = window.PAQUETERIA24_CONFIG 
             ? window.PAQUETERIA24_CONFIG.backendUrl 
-            : 'http://localhost:3000';
+            : 'http://localhost:3000'; // Fallback por defecto
         
-        console.log('🎯 Dashboard - Intentando conectar a:', backendUrl);
+        if (!window.PAQUETERIA24_CONFIG) {
+            console.warn('⚠️ Dashboard: PAQUETERIA24_CONFIG no encontrado, usando fallback');
+        }
+        
+        console.log('🎯 Dashboard - Conectando a:', backendUrl);
         
         const response = await fetch(`${backendUrl}/form`);
         
@@ -238,6 +255,7 @@ class Dashboard {
         const btnLogout = document.getElementById('btn-logout');
         const btnClearData = document.getElementById('btn-clear-data');
         const syncBtn = document.getElementById('btn-sync-backend');
+        const btnNotifications = document.getElementById('btn-notifications');
 
         if (searchInput) {
             searchInput.addEventListener('input', () => this.filterContacts());
@@ -258,6 +276,10 @@ class Dashboard {
         if (syncBtn) {
             syncBtn.addEventListener('click', () => this.syncWithBackend());
         }
+        
+        if (btnNotifications) {
+            btnNotifications.addEventListener('click', () => this.handleNotificationClick());
+        }
     }
 
     // Sincronizar con backend
@@ -268,6 +290,7 @@ class Dashboard {
             this.contacts = data;
             this.filteredContacts = [...this.contacts];
             this.renderContacts();
+            this.updateNotificationBadge();
             
             // Guardar en localStorage como backup
             localStorage.setItem('paqueteria24_contacts', JSON.stringify(this.contacts));
@@ -356,6 +379,286 @@ class Dashboard {
         }
     }
 
+    // Detectar nuevas consultas
+    detectNewContacts(currentContacts) {
+        if (this.lastCheckedContacts.length === 0) {
+            // Primera carga, no hay notificaciones
+            return [];
+        }
+
+        const currentIds = new Set(currentContacts.map(c => c._id || c.id));
+        const lastIds = new Set(this.lastCheckedContacts.map(c => c._id || c.id));
+        
+        // Encontrar contactos nuevos
+        const newContacts = currentContacts.filter(c => {
+            const id = c._id || c.id;
+            return !lastIds.has(id);
+        });
+
+        return newContacts;
+    }
+
+    // Actualizar badge de notificaciones
+    updateNotificationBadge() {
+        const badge = document.getElementById('notification-badge');
+        if (!badge) return;
+
+        const newContacts = this.detectNewContacts(this.contacts);
+        const unreadCount = this.getUnreadNotificationsCount();
+
+        if (unreadCount > 0) {
+            badge.textContent = unreadCount > 99 ? '99+' : unreadCount.toString();
+            badge.classList.remove('hidden');
+            
+            // Agregar animación si hay nuevas notificaciones
+            if (newContacts.length > 0) {
+                badge.classList.add('animate');
+                setTimeout(() => badge.classList.remove('animate'), 500);
+            }
+        } else {
+            badge.classList.add('hidden');
+        }
+    }
+
+    // Obtener contador de notificaciones no leídas
+    getUnreadNotificationsCount() {
+        const readIds = this.getReadNotificationIds();
+        const currentIds = new Set(this.contacts.map(c => c._id || c.id));
+        
+        // Contar contactos que no han sido marcados como leídos
+        return Array.from(currentIds).filter(id => !readIds.has(id)).length;
+    }
+
+    // Obtener IDs de notificaciones leídas
+    getReadNotificationIds() {
+        const stored = localStorage.getItem('paqueteria24_read_notifications');
+        return stored ? new Set(JSON.parse(stored)) : new Set();
+    }
+
+    // Guardar IDs de notificaciones leídas
+    saveReadNotificationIds(ids) {
+        localStorage.setItem('paqueteria24_read_notifications', JSON.stringify(Array.from(ids)));
+    }
+
+    // Manejar clic en notificaciones
+    handleNotificationClick() {
+        // Marcar todas las notificaciones como leídas
+        const allIds = new Set(this.contacts.map(c => c._id || c.id));
+        this.saveReadNotificationIds(allIds);
+        this.updateNotificationBadge();
+        
+        // Scroll a la tabla
+        const table = document.getElementById('contacts-table');
+        if (table) {
+            table.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Mostrar mensaje
+        this.showNotification('✅ Todas las notificaciones marcadas como leídas', 'success');
+    }
+
+    // Iniciar polling de notificaciones
+    startNotificationPolling() {
+        // Verificar cada 30 segundos si hay nuevas consultas
+        this.notificationCheckInterval = setInterval(async () => {
+            try {
+                const newContacts = await this.loadContacts();
+                const newOnes = this.detectNewContacts(newContacts);
+                
+                if (newOnes.length > 0) {
+                    this.contacts = newContacts;
+                    this.filteredContacts = [...this.contacts];
+                    this.renderContacts();
+                    this.updateNotificationBadge();
+                    
+                    // Mostrar notificación de nuevas consultas
+                    const message = newOnes.length === 1 
+                        ? `🔔 Nueva consulta recibida: ${newOnes[0].nombre}`
+                        : `🔔 ${newOnes.length} nuevas consultas recibidas`;
+                    this.showNotification(message, 'info');
+                }
+                
+                // Actualizar última verificación
+                this.lastCheckedContacts = [...newContacts];
+            } catch (error) {
+                console.error('❌ Error al verificar nuevas consultas:', error);
+            }
+        }, 30000); // 30 segundos
+    }
+
+    // Conectar a WebSocket para notificaciones en tiempo real
+    connectWebSocket() {
+        if (!window.PAQUETERIA24_CONFIG) {
+            console.warn('⚠️ PAQUETERIA24_CONFIG no disponible');
+            this.startNotificationPolling();
+            return;
+        }
+
+        if (!window.io) {
+            console.warn('⚠️ Socket.io no disponible, usando polling como fallback');
+            this.startNotificationPolling();
+            return;
+        }
+
+        // Obtener URL base del backend
+        const backendUrl = window.PAQUETERIA24_CONFIG.backendUrl || 'http://localhost:3000';
+        
+        console.log('🔌 Conectando a WebSocket...', backendUrl);
+        console.log('🔌 Namespace: /notifications');
+
+        try {
+            // Conectar directamente al namespace /notifications
+            // Socket.io maneja automáticamente ws/wss según el protocolo
+            this.socket = window.io(`${backendUrl}/notifications`, {
+                path: '/socket.io',
+                transports: ['websocket', 'polling'],
+                reconnection: true,
+                reconnectionDelay: 1000,
+                reconnectionDelayMax: 5000,
+                reconnectionAttempts: Infinity,
+                withCredentials: true,
+                autoConnect: true,
+            });
+
+            // Eventos de conexión
+            this.socket.on('connect', () => {
+                console.log('✅ Conectado al servidor WebSocket:', this.socket.id);
+                console.log('✅ Namespace:', this.socket.nsp.name);
+            });
+
+            this.socket.on('disconnect', (reason) => {
+                console.warn('⚠️ Desconectado del servidor WebSocket:', reason);
+                if (reason === 'io server disconnect') {
+                    // El servidor desconectó, reconectar manualmente
+                    this.socket.connect();
+                }
+            });
+
+            this.socket.on('connect_error', (error) => {
+                console.error('❌ Error al conectar WebSocket:', error);
+                console.error('❌ Detalles del error:', error.message);
+                // Usar polling como fallback si WebSocket falla
+                if (!this.notificationCheckInterval) {
+                    console.log('🔄 Cambiando a polling como fallback...');
+                    this.startNotificationPolling();
+                }
+            });
+
+            // Escuchar evento de nueva consulta
+            this.socket.on('new_form', (data) => {
+                console.log('🔔 Nueva consulta recibida vía WebSocket:', data);
+                this.handleNewFormNotification(data);
+            });
+
+            // Escuchar evento de eliminación de consulta
+            this.socket.on('form_deleted', (data) => {
+                console.log('🗑️ Consulta eliminada vía WebSocket:', data);
+                this.handleDeletedFormNotification(data.formId);
+            });
+
+            // Confirmación de conexión
+            this.socket.on('connected', (data) => {
+                console.log('📡 Servidor WebSocket confirmó conexión:', data);
+            });
+
+            // Escuchar todos los eventos para debugging (si está disponible)
+            if (this.socket.onAny) {
+                this.socket.onAny((event, ...args) => {
+                    console.log('📨 Evento WebSocket recibido:', event, args);
+                });
+            }
+
+        } catch (error) {
+            console.error('❌ Error al inicializar WebSocket:', error);
+            this.startNotificationPolling();
+        }
+    }
+
+    // Manejar notificación de nuevo formulario
+    async handleNewFormNotification(data) {
+        try {
+            console.log('📥 Procesando nueva consulta:', data);
+            
+            const newForm = data.data || data;
+            
+            if (!newForm) {
+                console.error('❌ Datos de formulario inválidos:', data);
+                return;
+            }
+            
+            // Verificar si la consulta ya existe (evitar duplicados)
+            const formId = newForm._id || newForm.id;
+            const exists = this.contacts.some(c => (c._id || c.id) === formId);
+            
+            if (exists) {
+                console.log('⚠️ Consulta ya existe, omitiendo:', formId);
+                return;
+            }
+            
+            console.log('✅ Agregando nueva consulta:', newForm.nombre);
+            
+            // Agregar nueva consulta a la lista (al principio)
+            this.contacts.unshift(newForm);
+            this.filteredContacts = [...this.contacts];
+            
+            // Actualizar UI
+            this.renderContacts();
+            
+            // Actualizar contador total
+            this.updateCounters();
+            
+            // Actualizar badge de notificaciones
+            // La nueva consulta no está marcada como leída, así que se contará
+            this.updateNotificationBadge();
+            
+            // Mostrar notificación
+            const message = `🔔 Nueva consulta recibida: ${newForm.nombre || 'Sin nombre'}`;
+            this.showNotification(message, 'info');
+            
+            // Actualizar última verificación
+            this.lastCheckedContacts = [...this.contacts];
+            
+            // Agregar animación al badge
+            const badge = document.getElementById('notification-badge');
+            if (badge) {
+                badge.classList.add('animate');
+                setTimeout(() => badge.classList.remove('animate'), 500);
+            }
+            
+            console.log('✅ Consulta agregada exitosamente. Total:', this.contacts.length);
+        } catch (error) {
+            console.error('❌ Error al procesar nueva consulta:', error);
+            this.showNotification('❌ Error al procesar nueva consulta', 'error');
+        }
+    }
+
+    // Manejar notificación de eliminación de formulario
+    async handleDeletedFormNotification(formId) {
+        // Remover consulta de la lista
+        this.contacts = this.contacts.filter(c => (c._id || c.id) !== formId);
+        this.filteredContacts = [...this.contacts];
+        
+        // Actualizar UI
+        this.renderContacts();
+        this.updateNotificationBadge();
+        
+        // Actualizar última verificación
+        this.lastCheckedContacts = [...this.contacts];
+    }
+
+    // Limpiar polling y WebSocket cuando se cierra la página
+    cleanup() {
+        if (this.notificationCheckInterval) {
+            clearInterval(this.notificationCheckInterval);
+        }
+        
+        if (this.socket) {
+            console.log('🔌 Desconectando WebSocket...');
+            this.socket.disconnect();
+            this.socket = null;
+        }
+    }
+
     // Eliminar un contacto específico
     async deleteContact(contactId) {
         if (!confirm('¿Estás seguro de eliminar esta consulta? Esta acción no se puede deshacer.')) {
@@ -363,12 +666,12 @@ class Dashboard {
         }
 
         try {
-            // Usar configuración centralizada
+            // Usar configuración centralizada del archivo config.js
             const backendUrl = window.PAQUETERIA24_CONFIG 
                 ? window.PAQUETERIA24_CONFIG.backendUrl 
-                : 'http://localhost:3000';
+                : 'http://localhost:3000'; // Fallback por defecto
             
-            console.log('🗑️ Eliminando contacto:', contactId);
+            console.log('🗑️ Eliminando contacto:', contactId, 'desde:', backendUrl);
 
             const response = await fetch(`${backendUrl}/form/${contactId}`, {
                 method: 'DELETE'
@@ -387,6 +690,7 @@ class Dashboard {
                 this.contacts = await this.loadContacts();
                 this.filteredContacts = [...this.contacts];
                 this.renderContacts();
+                this.updateNotificationBadge();
             } else {
                 throw new Error('Error al eliminar el contacto');
             }
@@ -403,4 +707,11 @@ let dashboard;
 // Inicializar Dashboard cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     dashboard = new Dashboard();
+});
+
+// Limpiar intervalos cuando se cierra la página
+window.addEventListener('beforeunload', () => {
+    if (dashboard) {
+        dashboard.cleanup();
+    }
 });

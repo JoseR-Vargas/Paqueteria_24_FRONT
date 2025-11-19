@@ -171,16 +171,13 @@ async function sendToBackend(data) {
 		// Usar configuración centralizada del archivo config.js
 		const backendUrl = window.PAQUETERIA24_CONFIG 
 			? window.PAQUETERIA24_CONFIG.backendUrl 
-			: (window.location.hostname === 'localhost' 
-				|| window.location.hostname === '127.0.0.1'
-				|| window.location.protocol === 'file:'
-				|| window.location.hostname === '')
-				? 'http://localhost:3000'
-				: 'https://paqueteria24-back.onrender.com';
+			: 'http://localhost:3000'; // Fallback por defecto
 		
-		console.log('🔍 Hostname detectado:', window.location.hostname);
-		console.log('🔍 Protocol detectado:', window.location.protocol);
-		console.log('🎯 Backend URL elegida:', backendUrl);
+		if (!window.PAQUETERIA24_CONFIG) {
+			console.warn('⚠️ PAQUETERIA24_CONFIG no encontrado, usando fallback');
+		}
+		
+		console.log('📤 Enviando datos al backend:', backendUrl);
 		console.log('📤 Enviando datos al backend:', data);
 		
 		const response = await fetch(`${backendUrl}/form`, {
