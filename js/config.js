@@ -8,7 +8,7 @@ const BACKEND_CONFIG = {
     development: 'http://localhost:3000',
     
     // PRODUCCIÓN: Backend en Render
-    production: 'https://paqueteria24-backend.onrender.com',
+    production: 'https://paqueteria24-back.onrender.com',
 };
 
 // Auto-detectar entorno

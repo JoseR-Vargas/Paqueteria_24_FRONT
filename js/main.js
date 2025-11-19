@@ -176,7 +176,7 @@ async function sendToBackend(data) {
 				|| window.location.protocol === 'file:'
 				|| window.location.hostname === '')
 				? 'http://localhost:3000'
-				: 'https://paqueteria24-backend.onrender.com';
+				: 'https://paqueteria24-back.onrender.com';
 		
 		console.log('🔍 Hostname detectado:', window.location.hostname);
 		console.log('🔍 Protocol detectado:', window.location.protocol);
