@@ -168,15 +168,15 @@ function clearStoredContacts() {
 // Función para enviar datos al backend
 async function sendToBackend(data) {
 	try {
-		// Detectar si estamos en desarrollo local
-		const isLocalDev = window.location.hostname === 'localhost' 
-			|| window.location.hostname === '127.0.0.1'
-			|| window.location.protocol === 'file:'
-			|| window.location.hostname === '';
-		
-		const backendUrl = isLocalDev
-			? 'http://localhost:3000' 
-			: 'http://localhost:3000';
+		// Usar configuración centralizada del archivo config.js
+		const backendUrl = window.PAQUETERIA24_CONFIG 
+			? window.PAQUETERIA24_CONFIG.backendUrl 
+			: (window.location.hostname === 'localhost' 
+				|| window.location.hostname === '127.0.0.1'
+				|| window.location.protocol === 'file:'
+				|| window.location.hostname === '')
+				? 'http://localhost:3000'
+				: 'https://paqueteria24-backend.onrender.com';
 		
 		console.log('🔍 Hostname detectado:', window.location.hostname);
 		console.log('🔍 Protocol detectado:', window.location.protocol);
