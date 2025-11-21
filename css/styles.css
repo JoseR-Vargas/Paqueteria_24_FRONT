@@ -1177,6 +1177,10 @@ body {
 
 /* Responsive Design - Mobile First (70% enfoque) */
 @media (max-width: 768px) {
+    .nav-container {
+        position: relative;
+    }
+
     .nav-menu {
         position: fixed;
         left: -100%;
@@ -1192,6 +1196,22 @@ body {
 
     .nav-menu.active {
         left: 0;
+    }
+
+    /* Notification button always visible on mobile */
+    .btn-notifications {
+        position: fixed !important;
+        right: 60px;
+        top: 35px;
+        transform: translateY(-50%);
+        z-index: 1001;
+        display: flex !important;
+    }
+
+    /* Logout button stays in mobile menu */
+    .btn-logout {
+        margin: 1rem auto;
+        width: 80%;
     }
 
     .nav-toggle {
@@ -1314,6 +1334,24 @@ body {
 
     .nav-container {
         padding: 0 15px;
+    }
+
+    /* Notification button adjustments for small mobile screens */
+    .btn-notifications {
+        right: 50px;
+        top: 35px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+
+    .notification-badge {
+        width: 20px;
+        height: 20px;
+        font-size: 0.7rem;
+        min-width: 20px;
+        top: 3px;
+        right: 3px;
     }
 
     .hero-title {
