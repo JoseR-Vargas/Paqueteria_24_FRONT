@@ -175,54 +175,99 @@
       </div>
     </section>
 
+
+
+   <!-- Refactoriza esta seccion y sus styles -->
+
     <!-- Values Section -->
     <section class="values-section">
-      <div class="container">
-        <h2 class="section-title">Nuestros Valores</h2>
-        <div class="values-grid">
-          <div class="value-item">
-            <img
-              src="./img/icono_camion.png"
-              alt="icono_camion"
-              loading="lazy"
-            />
-            <h3>Compromiso</h3>
-            <p>Cumplimos con lo prometido, siempre a tiempo.</p>
-          </div>
-          <div class="value-item">
-            <img src="./img/icono_caja2.png" alt="icono_caja" loading="lazy" />
-            <h3>Seguridad</h3>
-            <p>Cuidamos cada paquete como si fuera nuestro.</p>
-          </div>
-          <div class="value-item">
-            <img
-              src="./img/icono_validated.png"
-              alt="icono_mano"
-              loading="lazy"
-            />
-            <h3>Confianza</h3>
-            <p>Creamos relaciones duraderas con clientes y aliados.</p>
-          </div>
-          <div class="value-item">
-            <img src="./img/icono_caja.png" alt="icono_tiempo" loading="lazy" />
-            <h3>Rapidez</h3>
-            <p>Soluciones inmediatas para un mundo que no espera.</p>
-          </div>
-
-          <!-- Imagen de refuerzo visual -->
-          <div class="value-item delivery-highlight">
-            <div class="delivery-image-container"></div>
-          </div>
+      <div class="container values-shell">
+        <div class="values-top">
+          <span class="values-tag">Cultura Paquetería24</span>
+          <h2 class="section-title">Nuestros Valores</h2>
+          <p class="values-lead">
+            La manera en que entregamos va más allá de la velocidad: nos mueve la
+            confianza, la cercanía con nuestros clientes y el cuidado de cada
+            envío como si fuera propio.
+          </p>
         </div>
 
-        <!-- Frases motivacionales -->
-        <div class="delivery-phrases-outside">
-          <p class="delivery-phrase-text">
-            "Conectamos destinos, entregamos sonrisas."
-          </p>
-          <p class="delivery-phrase-text">
-            "Rápido, seguro y sin complicaciones."
-          </p>
+        <div class="values-layout">
+          <div class="values-list">
+            <article class="value-card">
+              <div class="value-icon-wrap">
+                <img
+                  src="./img/icono_camion.png"
+                  alt="icono de compromiso"
+                  loading="lazy"
+                />
+              </div>
+              <div class="value-copy">
+                <h3>Compromiso</h3>
+                <p>Cumplimos con lo prometido, siempre a tiempo.</p>
+              </div>
+            </article>
+
+            <article class="value-card">
+              <div class="value-icon-wrap">
+                <img
+                  src="./img/icono_caja2.png"
+                  alt="icono de seguridad"
+                  loading="lazy"
+                />
+              </div>
+              <div class="value-copy">
+                <h3>Seguridad</h3>
+                <p>Cuidamos cada paquete como si fuera nuestro.</p>
+              </div>
+            </article>
+
+            <article class="value-card">
+              <div class="value-icon-wrap">
+                <img
+                  src="./img/icono_validated.png"
+                  alt="icono de confianza"
+                  loading="lazy"
+                />
+              </div>
+              <div class="value-copy">
+                <h3>Confianza</h3>
+                <p>Creamos relaciones duraderas con clientes y aliados.</p>
+              </div>
+            </article>
+
+            <article class="value-card">
+              <div class="value-icon-wrap">
+                <img
+                  src="./img/icono_caja.png"
+                  alt="icono de rapidez"
+                  loading="lazy"
+                />
+              </div>
+              <div class="value-copy">
+                <h3>Rapidez</h3>
+                <p>Soluciones inmediatas para un mundo que no espera.</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="values-visual">
+            <div class="values-visual-card">
+              <div class="values-visual-img" role="img" aria-label="Servicio de entrega ágil"></div>
+              <div class="values-phrases">
+                <p class="values-phrase">
+                  “Conectamos destinos, entregamos sonrisas.”
+                </p>
+                <p class="values-phrase">
+                  “Rápido, seguro y sin complicaciones.”
+                </p>
+                <div class="values-note">
+                  <span class="values-dot"></span>
+                  <p>Equipo listo para acompañarte en cada envío.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -318,7 +363,7 @@
     </section>
 
     <!-- Benefits Section -->
-    <section class="benefits-section">
+    <section id="beneficios" class="benefits-section">
       <div class="container">
         <h2 class="section-title">¿Por qué elegirnos?</h2>
         <div class="benefits-grid">
@@ -344,28 +389,48 @@
 
     <!-- Integrations Section -->
     <section class="integrations-section">
-      <div class="integrations-background">
-        <div class="container">
-          <h2 class="section-title">Integramos tus Plataformas</h2>
-          <p class="integrations-subtitle">
-            Conectamos con las principales plataformas de e-commerce y
-            marketplaces
+      <div class="container integration-shell">
+        <div class="integration-header">
+          <span class="integration-pill">Integramos tus plataformas</span>
+          <h2 class="section-title">Conecta, automatiza y envía sin fricción</h2>
+          <p class="integration-subtitle">
+            Conectamos con las principales soluciones de e-commerce y marketplaces para que tu operación siga
+            fluyendo sin importar dónde vendes.
           </p>
-          <div class="integrations-grid">
-            <div class="integration-item">
-              <img
-                src="./img/mercadolibre.png"
-                alt="Mercado Libre"
-                class="mercadolibre-img"
-              />
+         
+        <div class="integration-body">
+          <div class="integration-visual">
+            <div class="integration-visual-img" role="img" aria-label="Panel de integraciones de e-commerce"></div>
+            <div class="integration-visual-note">
             </div>
-            <div class="integration-item">
-              <img
-                src="./img/paquete.png"
-                alt="E-commerce"
-                class="paquete-img"
-              />
-            </div>
+          </div>
+
+          <div class="integration-grid">
+            <article class="integration-card">
+              <div class="integration-card-header">
+                <div class="logo-ring">
+                  <img
+                    src="./img/mercadolibre.png"
+                    alt="Mercado Libre"
+                  />
+                </div>
+                <span class="integration-tag">Marketplace</span>
+              </div>
+              <h3>Mercado Libre</h3>
+            </article>
+
+            <article class="integration-card">
+              <div class="integration-card-header">
+                <div class="logo-ring alt">
+                  <img
+                    src="./img/paquete.png"
+                    alt="Tiendas online"
+                  />
+                </div>
+                <span class="integration-tag">E-commerce</span>
+              </div>
+              <h3>Tiendas Online</h3>
+            </article>
           </div>
         </div>
       </div>
@@ -448,41 +513,69 @@
       </div>
     </section>
 
+    
+
     <!-- Footer -->
     <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h3>Paquetería24</h3>
-            <p>Tu aliado logístico de confianza</p>
-          </div>
-
-          <div class="footer-section">
-            <h4>Contacto</h4>
-            <p>📞 +598 97 948 978</p>
-            <p>📍 Camino Carrasco 4284<br />Malvin Norte/Montevideo</p>
-          </div>
-
-          <div class="footer-section">
-            <h4>Síguenos</h4>
-            <div class="social-links">
-              <a
-                href="https://instagram.com/paqueteria24.uy"
-                target="_blank"
-                rel="noopener"
-              >
-                 Instagram
-              </a>
-              <a
-                href="https://www.facebook.com/Paqueteria24/"
-                target="_blank"
-                rel="noopener"
-              >
-                 Facebook
-              </a>
+      <div class="container footer-shell">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <span class="footer-pill">Logística 24/7</span>
+            <h3 class="footer-title">Paquetería24</h3>
+            <p class="footer-lead">
+              Tu aliado de confianza para envíos que necesitan precisión, rapidez
+              y un trato humano en cada entrega.
+            </p>
+            <div class="footer-actions">
+              <a class="footer-btn" href="#contacto">Agenda tu envío</a>
+              <a class="footer-btn ghost" href="tel:+59897948978">Llámanos</a>
             </div>
+          </div>
 
-            <div class="social-links"></div>
+          <div class="footer-columns">
+            <div class="footer-col">
+              <h4>Contacto</h4>
+              <ul class="footer-list">
+                <li><span class="footer-chip">Tel</span> +598 97 948 978</li>
+                <li>
+                  <span class="footer-chip">Dirección</span> Camino Carrasco 4284<br />
+                  Malvin Norte / Montevideo
+                </li>
+                <li><span class="footer-chip">Correo</span> logistica@paqueteria24.uy</li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Atajos</h4>
+              <ul class="footer-list">
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#beneficios">Beneficios</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Redes</h4>
+              <div class="footer-social">
+                <a
+                  href="https://instagram.com/paqueteria24.uy"
+                  target="_blank"
+                  rel="noopener"
+                  class="social-pill"
+                >
+                  Instagram
+                </a>
+                <a
+                  href="https://www.facebook.com/Paqueteria24/"
+                  target="_blank"
+                  rel="noopener"
+                  class="social-pill"
+                >
+                  Facebook
+                </a>
+              </div>
+              <p class="footer-note">
+                Síguenos para ver entregas en vivo y tips de envíos.
+              </p>
+            </div>
           </div>
         </div>
 
