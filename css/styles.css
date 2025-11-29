@@ -2118,6 +2118,48 @@ body {
     }
 }
 
+/* Footer centrado en desktop */
+@media (min-width: 769px) {
+    .footer-brand {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .footer-lead {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .footer-actions {
+        justify-content: center;
+    }
+    
+    .footer-col {
+        text-align: center;
+    }
+
+    .footer-list {
+        justify-items: center;
+        text-align: center;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+
+    .footer-note {
+        text-align: center;
+    }
+    
+    .footer-bottom {
+        justify-content: center;
+        text-align: center;
+    }
+}
+
 @media (min-width: 992px) and (max-width: 1199px) {
     .brand-phrases {
         width: 88%;
