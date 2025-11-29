@@ -707,6 +707,26 @@ let dashboard;
 // Inicializar Dashboard cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     dashboard = new Dashboard();
+    
+    // Configurar menú móvil hamburger
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+        
+        // Cerrar menú al hacer click en cerrar sesión
+        const btnLogout = document.getElementById('btn-logout');
+        if (btnLogout) {
+            btnLogout.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        }
+    }
 });
 
 // Limpiar intervalos cuando se cierra la página
