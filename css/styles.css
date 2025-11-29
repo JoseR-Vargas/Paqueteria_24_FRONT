@@ -142,6 +142,7 @@ body {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(60px);
     animation: float-shape 20s infinite ease-in-out;
+    will-change: transform;
 }
 
 .shape-1 {
@@ -2287,6 +2288,12 @@ body {
         height: 150px;
     }
 
+    /* Optimize shapes for mobile performance */
+    .shape {
+        backdrop-filter: blur(30px);
+        animation-duration: 30s;
+    }
+
     /* About Section Responsive */
     .about-title {
         font-size: 2.5rem;
@@ -2448,6 +2455,27 @@ body {
     .badge-icon {
         width: 16px;
         height: 16px;
+    }
+
+    /* Further optimize shapes for small mobile screens */
+    .shape {
+        backdrop-filter: blur(20px);
+        animation-duration: 40s;
+    }
+
+    .shape-1 {
+        width: 200px;
+        height: 200px;
+    }
+
+    .shape-2 {
+        width: 150px;
+        height: 150px;
+    }
+
+    .shape-3 {
+        width: 100px;
+        height: 100px;
     }
 
     .feature {
