@@ -73,7 +73,8 @@ body {
 
 .nav-menu {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
+    align-items: center;
 }
 
 .nav-link {

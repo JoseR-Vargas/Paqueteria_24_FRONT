@@ -359,9 +359,7 @@ class Dashboard {
 
     // Logout
     logout() {
-        if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
-            this.authService.logout();
-        }
+        this.authService.logout();
     }
 
     // Limpiar todos los datos
@@ -661,10 +659,6 @@ class Dashboard {
 
     // Eliminar un contacto específico
     async deleteContact(contactId) {
-        if (!confirm('¿Estás seguro de eliminar esta consulta? Esta acción no se puede deshacer.')) {
-            return;
-        }
-
         try {
             // Usar configuración centralizada del archivo config.js
             const backendUrl = window.PAQUETERIA24_CONFIG 
