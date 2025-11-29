@@ -81,97 +81,194 @@
 
     <!-- Main Section -->
     <main id="inicio" class="main-section">
+      <div class="hero-background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+      </div>
+      
       <div class="container">
         <div class="hero-content">
-          <h1 class="hero-title">Paquetería24</h1>
+          <div class="hero-badge">
+            <svg class="badge-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Servicio 24/7</span>
+          </div>
+          
+          <h1 class="hero-title">
+            <span class="hero-title-brand">Paquetería24</span>
+          </h1>
+          
           <h2 class="hero-main-phrase">
-            "Encomienda rápida y segura, siempre a tiempo."
+            Encomienda rápida y segura,<br>
+            <span class="highlight-text">siempre a tiempo.</span>
           </h2>
+          
           <p class="hero-subphrase">
-            Conectamos personas y negocios con envíos confiables, sin
-            complicaciones.
+            Conectamos personas y negocios con envíos confiables, sin complicaciones.
+            Tu aliado logístico de confianza en Uruguay.
           </p>
+          
           <div class="hero-features">
-            <div class="feature">
-              <span class="feature-icon"></span>
-              <span>Rapidez</span>
+            <div class="feature feature-animate">
+              <div class="feature-icon-wrapper">
+                <svg class="feature-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="feature-content">
+                <span class="feature-title">Rapidez</span>
+                <span class="feature-subtitle">Entregas express</span>
+              </div>
             </div>
-            <div class="feature">
-              <span class="feature-icon"></span>
-              <span>Confianza</span>
+            
+            <div class="feature feature-animate">
+              <div class="feature-icon-wrapper">
+                <svg class="feature-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="feature-content">
+                <span class="feature-title">Confianza</span>
+                <span class="feature-subtitle">100% seguro</span>
+              </div>
             </div>
-            <div class="feature">
-              <span class="feature-icon"></span>
-              <span>Atención Cercana</span>
+            
+            <div class="feature feature-animate">
+              <div class="feature-icon-wrapper">
+                <svg class="feature-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="feature-content">
+                <span class="feature-title">Atención Cercana</span>
+                <span class="feature-subtitle">Soporte personalizado</span>
+              </div>
             </div>
           </div>
+          
+          <div class="hero-cta">
+            <a href="#contacto" class="btn-primary-hero">
+              <span>Solicitar Cotización</span>
+              <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a href="#servicios" class="btn-secondary-hero">
+              Ver Servicios
+            </a>
+          </div>
         </div>
+      </div>
+      
+      <div class="hero-scroll-indicator">
+        <div class="scroll-mouse">
+          <div class="scroll-wheel"></div>
+        </div>
+        <span>Scroll</span>
       </div>
     </main>
 
     <!-- About Us Section -->
-    <section class="about-section">
+    <section id="nosotros" class="about-section">
       <div class="about-background">
+        <div class="about-overlay"></div>
+        
         <div class="container">
-          <h2 class="section-title">Quiénes Somos</h2>
-
-        <!-- Descripción de la empresa en texto plano -->
-        <div class="brand-profile-intro">
-          <h3 class="brand-profile-title">Paquetería24</h3>
-          <p class="brand-profile-text">
-            Somos una empresa de logística y encomiendas comprometida con la
-            excelencia en cada envío. Nos dedicamos a conectar personas y
-            negocios a través de un servicio de paquetería confiable, rápido y
-            seguro. Con un equipo apasionado y tecnología de vanguardia,
-            transformamos cada entrega en una experiencia que genera
-            tranquilidad y satisfacción.
-          </p>
-        </div>
-
-        <!-- Misión y Visión en texto plano -->
-        <div class="mission-vision-container">
-          <div class="mission-vision-item">
-            <h3 class="mission-vision-title">MISIÓN</h3>
-            <p class="mission-vision-text">
-              Ofrecer un servicio de logística y encomiendas rápido, seguro y
-              accesible, garantizando confianza en cada entrega y conectando a
-              nuestros clientes con lo que más importa.
-            </p>
+          <div class="about-header">
+            <div class="about-badge">
+              <svg class="about-badge-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+              </svg>
+              <span>Nuestra Historia</span>
+            </div>
+            
+            <h2 class="section-title about-title">
+              Quiénes <span class="title-highlight">Somos</span>
+            </h2>
           </div>
-          <div class="mission-vision-item">
-            <h3 class="mission-vision-title">VISIÓN</h3>
-            <p class="mission-vision-text">
-              Ser la empresa de paquetería preferida del país, reconocida por su
-              puntualidad, seguridad y atención personalizada, consolidando la
-              confianza de miles de clientes.
-            </p>
-          </div>
-        </div>
 
-        <!-- Banner con imagen -->
-        <div class="about-banner-wrapper">
-          <div class="hero-banner-container">
-            <img
-              src="./img/hero banner.png"
-              alt="Paquetería24 - Servicio de Entrega"
-              class="hero-banner-img"
-              loading="lazy"
-            />
-            <div class="brand-phrases">
-              <div class="brand-phrase phrase-1">
-                <span class="quote-icon">"</span>
-                <p>Tu paquete, siempre seguro.</p>
-                <span class="quote-icon">"</span>
+          <!-- Descripción de la empresa -->
+          <div class="brand-profile-modern">
+            <div class="brand-profile-card">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </div>
-              <div class="brand-phrase phrase-2">
-                <span class="quote-icon">"</span>
-                <p>Más que logística, confianza.</p>
-                <span class="quote-icon">"</span>
+              <h3 class="card-brand">Paquetería24</h3>
+              <p class="card-description">
+                Somos una empresa de logística y encomiendas comprometida con la
+                excelencia en cada envío. Nos dedicamos a conectar personas y
+                negocios a través de un servicio de paquetería confiable, rápido y
+                seguro. Con un equipo apasionado y tecnología de vanguardia,
+                transformamos cada entrega en una experiencia que genera
+                tranquilidad y satisfacción.
+              </p>
+              
+              <div class="card-stats">
+                <div class="stat-item-mini">
+                  <span class="stat-number-mini">5+</span>
+                  <span class="stat-label-mini">Años</span>
+                </div>
+                <div class="stat-item-mini">
+                  <span class="stat-number-mini">1000+</span>
+                  <span class="stat-label-mini">Clientes</span>
+                </div>
+                <div class="stat-item-mini">
+                  <span class="stat-number-mini">24/7</span>
+                  <span class="stat-label-mini">Disponibilidad</span>
+                </div>
               </div>
             </div>
           </div>
+
+          <!-- Misión y Visión modernas -->
+          <div class="mission-vision-modern">
+            <div class="mv-card mission-card">
+              <div class="mv-icon-wrapper">
+                <svg class="mv-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="mv-content">
+                <h3 class="mv-title">Misión</h3>
+                <p class="mv-text">
+                  Ofrecer un servicio de logística y encomiendas rápido, seguro y
+                  accesible, garantizando confianza en cada entrega y conectando a
+                  nuestros clientes con lo que más importa.
+                </p>
+              </div>
+            </div>
+
+            <div class="mv-card vision-card">
+              <div class="mv-icon-wrapper">
+                <svg class="mv-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="mv-content">
+                <h3 class="mv-title">Visión</h3>
+                <p class="mv-text">
+                  Ser la empresa de paquetería preferida del país, reconocida por su
+                  puntualidad, seguridad y atención personalizada, consolidando la
+                  confianza de miles de clientes.
+                </p>
+              </div>
+            </div>
+          </div>
+
         </div>
-      </div>
       </div>
     </section>
 
@@ -387,51 +484,99 @@
       </div>
     </section>
 
-    <!-- Integrations Section -->
+    <!-- Integrations Section - Modern -->
     <section class="integrations-section">
-      <div class="container integration-shell">
-        <div class="integration-header">
-          <span class="integration-pill">Integramos tus plataformas</span>
-          <h2 class="section-title">Conecta, automatiza y envía sin fricción</h2>
-          <p class="integration-subtitle">
-            Conectamos con las principales soluciones de e-commerce y marketplaces para que tu operación siga
-            fluyendo sin importar dónde vendes.
+      <div class="container">
+        <div class="integrations-header-modern">
+          <div class="integration-badge-modern">
+            <svg class="badge-icon-modern" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="currentColor"/>
+            </svg>
+            <span>Integraciones</span>
+          </div>
+          
+          <h2 class="section-title integration-title">
+            Conecta, Automatiza y <span class="title-accent">Envía sin Fricción</span>
+          </h2>
+          
+          <p class="integration-description">
+            Conectamos con las principales soluciones de e-commerce y marketplaces 
+            para que tu operación siga fluyendo sin importar dónde vendes.
           </p>
-         
-        <div class="integration-body">
-          <div class="integration-visual">
-            <div class="integration-visual-img" role="img" aria-label="Panel de integraciones de e-commerce"></div>
-            <div class="integration-visual-note">
+        </div>
+
+        <div class="integrations-grid-modern">
+          <article class="integration-card-modern mercadolibre-card">
+            <div class="card-glow"></div>
+            <div class="card-content-modern">
+              <div class="logo-wrapper-modern">
+                <img
+                  src="./img/mercadolibre.png"
+                  alt="Mercado Libre"
+                  class="integration-logo-modern"
+                />
+              </div>
+              
+              <div class="card-info-modern">
+                <span class="integration-badge-tag marketplace">Marketplace</span>
+                <h3 class="integration-name-modern">Mercado Libre</h3>
+                <p class="integration-desc-modern">
+                  Sincroniza automáticamente tus ventas y gestiona envíos directamente desde tu panel.
+                </p>
+              </div>
+              
+              <div class="card-features-modern">
+                <div class="feature-item-modern">
+                  <svg class="feature-icon-modern" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>Sincronización automática</span>
+                </div>
+                <div class="feature-item-modern">
+                  <svg class="feature-icon-modern" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>Gestión centralizada</span>
+                </div>
+              </div>
             </div>
-          </div>
+          </article>
 
-          <div class="integration-grid">
-            <article class="integration-card">
-              <div class="integration-card-header">
-                <div class="logo-ring">
-                  <img
-                    src="./img/mercadolibre.png"
-                    alt="Mercado Libre"
-                  />
-                </div>
-                <span class="integration-tag">Marketplace</span>
+          <article class="integration-card-modern ecommerce-card">
+            <div class="card-glow"></div>
+            <div class="card-content-modern">
+              <div class="logo-wrapper-modern">
+                <img
+                  src="./img/paquete.png"
+                  alt="Tiendas Online"
+                  class="integration-logo-modern"
+                />
               </div>
-              <h3>Mercado Libre</h3>
-            </article>
-
-            <article class="integration-card">
-              <div class="integration-card-header">
-                <div class="logo-ring alt">
-                  <img
-                    src="./img/paquete.png"
-                    alt="Tiendas online"
-                  />
-                </div>
-                <span class="integration-tag">E-commerce</span>
+              
+              <div class="card-info-modern">
+                <span class="integration-badge-tag ecommerce">E-commerce</span>
+                <h3 class="integration-name-modern">Tiendas Online</h3>
+                <p class="integration-desc-modern">
+                  Integración perfecta con tu tienda online para procesar pedidos sin complicaciones.
+                </p>
               </div>
-              <h3>Tiendas Online</h3>
-            </article>
-          </div>
+              
+              <div class="card-features-modern">
+                <div class="feature-item-modern">
+                  <svg class="feature-icon-modern" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Envíos rápidos y seguros</span>
+                  </div>
+                  <div class="feature-item-modern">
+                    <svg class="feature-icon-modern" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Seguimiento de pedidos</span>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -541,7 +686,7 @@
                   <span class="footer-chip">Dirección</span> Camino Carrasco 4284<br />
                   Malvin Norte / Montevideo
                 </li>
-                <li><span class="footer-chip">Correo</span> logistica@paqueteria24.uy</li>
+                <li><span class="footer-chip">Correo</span> paqueteria24.uy@gmail.com</li>
               </ul>
             </div>
             <div class="footer-col">
