@@ -1,15 +1,67 @@
-# Forzar recarga de caché para GitHub Pages
-<IfModule mod_expires.c>
-    ExpiresActive On
-    ExpiresByType text/css "access plus 0 seconds"
-    ExpiresByType application/javascript "access plus 0 seconds"
-    ExpiresByType text/html "access plus 0 seconds"
+# ====================================
+# OPTIMIZACIÓN DE RENDIMIENTO
+# Cache agresivo para producción
+# ====================================
+
+# Habilitar compresión GZIP
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>
 
-<IfModule mod_headers.c>
-    <FilesMatch "\.(css|js|html)$">
-        Header set Cache-Control "no-cache, no-store, must-revalidate"
-        Header set Pragma "no-cache"
-        Header set Expires "0"
-    </FilesMatch>
+# Cache de recursos estáticos para PRODUCCIÓN
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Imágenes - 1 año
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # CSS y JavaScript - 1 mes (usa versionado ?v=X.X en el HTML)
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    
+    # Fuentes - 1 año
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    
+    # HTML - 5 minutos (permite actualizaciones rápidas)
+    ExpiresByType text/html "access plus 5 minutes"
 </IfModule>
+
+# Headers de cache optimizados
+<IfModule mod_headers.c>
+    # Cache inmutable para recursos estáticos con versión
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|woff|woff2|ttf)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    
+    # Cache de 1 mes para CSS/JS (cambiar ?v=X.X para forzar actualización)
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+    
+    # Cache corto para HTML (5 minutos)
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "public, max-age=300, must-revalidate"
+    </FilesMatch>
+    
+    # Prevenir MIME sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Habilitar HTTP/2 Server Push si está disponible
+    Header add Link "</css/styles.css?v=1.2>; rel=preload; as=style"
+</IfModule>
+
+# Prevenir listado de directorios
+Options -Indexes
+
+# Configuración de errores
+ErrorDocument 404 /index.html

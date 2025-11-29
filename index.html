@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      http-equiv="Cache-Control"
-      content="no-cache, no-store, must-revalidate"
-    />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-    npm 
+    
+    <!-- Optimización de renderizado - Previene FOUC -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="renderer" content="webkit" />
+    
+    <!-- Cache control optimizado para producción -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000" />
+    <meta http-equiv="Pragma" content="public" /> 
     <!-- SEO Meta Tags -->
     <meta name="description" content="Paquetería24 ofrece servicios profesionales de logística, envío de paquetes y encomiendas en Uruguay. Entregas rápidas y seguras en Montevideo y todo el país." />
     <meta name="keywords" content="paquetería uruguay, envíos uruguay, logística montevideo, encomiendas uruguay, mensajería uruguay, transporte de paquetes, envíos express, courier uruguay, rastreo de paquetes" />
@@ -41,8 +42,41 @@
     
     <title>Paquetería24 - Servicios de Logística y Encomiendas</title>
     <link rel="icon" type="image/png" href="./img/favicon.png" />
+    
+    <!-- Critical CSS Inline - Previene FOUC -->
+    <style>
+      /* Reset básico y prevención de FOUC */
+      *{margin:0;padding:0;box-sizing:border-box}
+      :root{--color-ciruleo:#047BA4;--color-azul-golfo:#040453;--color-turquesa:#5BE3E4;--color-hoja-agua:#9BE0E6;--color-blanco:#FFFFFF;--font-logo:'Lobster',cursive;--font-titulo:'Montserrat',sans-serif;--font-subtitulo:'Poppins',sans-serif;--font-cuerpo:'Muli',sans-serif}
+      html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+      body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;line-height:1.6;color:var(--color-azul-golfo);background-color:var(--color-blanco);overflow-x:hidden}
+      body.loading{opacity:0}
+      body.loaded{opacity:1;transition:opacity 0.2s ease-in}
+      .navbar{background:linear-gradient(135deg,var(--color-ciruleo),var(--color-azul-golfo));padding:1rem 0;position:fixed;top:0;width:100%;z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,0.1)}
+      .nav-container{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center}
+      .nav-menu{display:flex;gap:1rem;align-items:center}
+      .logo-text{font-family:var(--font-logo);font-size:1.5rem;color:var(--color-blanco);font-weight:400}
+      .container{max-width:1200px;margin:0 auto;padding:0 20px}
+      .main-section{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;padding-top:80px;background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%)}
+      /* Preload skeleton para mejor UX */
+      @media (prefers-reduced-motion: no-preference) {
+        body.loading *{animation:none!important;transition:none!important}
+      }
+    </style>
+    
+    <!-- DNS Prefetch para recursos externos -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    
+    <!-- Preconnect para conexiones tempranas -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Preload del CSS principal - MÁXIMA PRIORIDAD -->
+    <link rel="preload" href="./css/styles.css?v=1.2" as="style" />
+    <link rel="stylesheet" href="./css/styles.css?v=1.2" media="all" />
+    
+    <!-- Fonts con carga asíncrona -->
     <link
       rel="preload"
       href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;600;700&family=Muli:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
@@ -54,10 +88,9 @@
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;600;700&family=Muli:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
     /></noscript>
-    <link rel="stylesheet" href="./css/styles.css?v=1.1" />
   </head>
 
-  <body>
+  <body class="loading">
     <!-- Navbar -->
     <nav class="navbar">
       <div class="nav-container">
@@ -730,6 +763,59 @@
       </div>
     </footer>
 
+    <!-- Script inline para prevenir FOUC -->
+    <script>
+      (function() {
+        'use strict';
+        
+        // Función para mostrar el contenido
+        function showContent() {
+          var body = document.body;
+          if (body.classList.contains('loading')) {
+            body.classList.remove('loading');
+            body.classList.add('loaded');
+          }
+        }
+        
+        // Verificar si el stylesheet ya está cargado
+        function isStyleSheetLoaded() {
+          var sheets = document.styleSheets;
+          for (var i = 0; i < sheets.length; i++) {
+            try {
+              // Intentar acceder a cssRules para verificar que esté cargado
+              if (sheets[i].href && sheets[i].href.indexOf('styles.css') !== -1) {
+                return sheets[i].cssRules !== null;
+              }
+            } catch(e) {
+              // Ignorar errores de CORS
+            }
+          }
+          return false;
+        }
+        
+        // Esperar a que el CSS esté completamente cargado
+        var checkInterval = setInterval(function() {
+          if (isStyleSheetLoaded() || document.readyState === 'complete') {
+            clearInterval(checkInterval);
+            showContent();
+          }
+        }, 10);
+        
+        // Asegurar que se muestre después de DOMContentLoaded
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', showContent);
+        } else {
+          showContent();
+        }
+        
+        // Fallback: forzar mostrar después de 300ms máximo
+        setTimeout(function() {
+          clearInterval(checkInterval);
+          showContent();
+        }, 300);
+      })();
+    </script>
+    
     <script src="./js/config.js"></script>
     <script src="./js/main.js" defer></script>
   </body>
